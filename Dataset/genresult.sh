@@ -17,6 +17,7 @@ do
 	datafile=${cut2[0]}
 	#echo ${cut2[0]}
 
-	#svm-predict 
+	#svm-predict
+	echo $cut1".result" >> ../$resultdir/"log"
 	svm-predict $item ../model/$datafile".train.model" ../$resultdir/$cut1".result" >> ../$resultdir/"log"
 done

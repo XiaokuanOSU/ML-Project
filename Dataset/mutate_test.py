@@ -21,8 +21,24 @@ for i in range(0, 10):
 		for line in lines:
 			parts = line.split()
 			target = str(j) + ":1"
+			temp = line
 			if target not in parts:
-				line = line[:len(line)-2] + target + "\n"
+				# line = line[:len(line)-2] + target + "\n"
+				temp = parts[0]
+				is_greater = False
+				last_attribute = 0
+				for part in parts[1:]:
+					if not is_greater:
+						attribute = int(part.split(":")[0])
+						last_attribute = attribute
+						if attribute > j:
+							is_greater = True
+							temp = temp + " " + target
+					temp = temp + " " + part
+				if last_attribute < j:
+					temp = temp + " " + target
+				temp = temp + "\n"
+
 				if parts[0] == "-1":
 					malicious_modified += 1
 				elif parts[0] == "+1":
@@ -30,7 +46,7 @@ for i in range(0, 10):
 				else:
 					print (parts)
 					print ("error, not starting with -1/+1")
-			new_test.write(line)
+			new_test.write(temp)
 		new_test.close()
 
 		log.write("malicious modified: " + str(malicious_modified) + "\n")
