@@ -67,7 +67,7 @@ plt.xlabel('index of attribute')
 plt.ylabel('Accuracy (%)')
 plt.savefig(output, format='eps', dpi=300)
 
-filename = "test/data0.test"
+filename = "train/data0.train"
 filehandle = open(filename,"r")
 lines = filehandle.readlines()
 filehandle.close()
