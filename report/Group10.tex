@@ -26,7 +26,7 @@
 
 \maketitle
 \section*{Abstract}
-In this project, we use different classification algorithms to classify hand-written digits and pixel-displayed letters. The algorithms we use are Naive Bayes, Support Vector Machine and Artificial Neural Networks. For each algorithm, we tune different parameters in order to achieve a better performance. We use accuracy and F-measure to evaluate the performance. Generally speaking, SVM performs best among the three, and Naive Bayes does not work well. 
+% In this project, we use different classification algorithms to classify hand-written digits and pixel-displayed letters. The algorithms we use are Naive Bayes, Support Vector Machine and Artificial Neural Networks. For each algorithm, we tune different parameters in order to achieve a better performance. We use accuracy and F-measure to evaluate the performance. Generally speaking, SVM performs best among the three, and Naive Bayes does not work well. 
 
 
 \section{Introduction}
@@ -35,12 +35,17 @@ In this project, we use different classification algorithms to classify hand-wri
 Our group wants to solve the problem of classifying hand-written digits and  black-and-white rectangular pixel-displayed letters. We have two datasets from UCI machine learning repository \cite{Lichman2013}. One is hand-written digits dataset \cite{digitdataset}. Another is letter recognition dataset \cite{letterdataset}. We will introduce them in more detail in Section \ref{exp}.
 
 \subsection{Classification Algorithms}
-In this report, we test three machine learning  algorithms, i.e., Support Vector Machine (SVM), Neural Networks, and Naive Bayes. We will present the detail of algorithms in Section \ref{sec:metho}.
+% In this report, we test three machine learning  algorithms, i.e., Support Vector Machine (SVM), Neural Networks, and Naive Bayes. We will present the detail of algorithms in Section \ref{sec:metho}.
+
+\subsection{Hypothesis}
+
+\subsection{Originality}
+
 \subsection{Result Summary}
-For the hand-written digit dataset, after tuning the parameters, the three classifiers can achieve 98.97\%, 93.27\%, 92.02\%  accuracy. For the letter dataset, they can reach 95.33\%, 82.77\%, 74.18\% accuracy. We only submit a \texttt{pdf} file and a \texttt{tex} file to Carmen. For a more detailed view of our repository, please visit our repo on github \footnote{https://github.com/XiaokuanOSU/AI2report}.
+% For the hand-written digit dataset, after tuning the parameters, the three classifiers can achieve 98.97\%, 93.27\%, 92.02\%  accuracy. For the letter dataset, they can reach 95.33\%, 82.77\%, 74.18\% accuracy. We only submit a \texttt{pdf} file and a \texttt{tex} file to Carmen. For a more detailed view of our repository, please visit our repo on github \footnote{https://github.com/XiaokuanOSU/AI2report}.
 
 \section{Background}
-The hand-written digit dataset was first used in \cite{kaynak1995methods}. In the paper they combined different classifiers to obtain a better performance.  The letter recognition dataset was first used in \cite{frey1991letter}. They generated classification rules to distinguish different letters.
+% The hand-written digit dataset was first used in \cite{kaynak1995methods}. In the paper they combined different classifiers to obtain a better performance.  The letter recognition dataset was first used in \cite{frey1991letter}. They generated classification rules to distinguish different letters.
 
 % \begin{figure}[htbp]
 % \centering
@@ -67,24 +72,32 @@ The hand-written digit dataset was first used in \cite{kaynak1995methods}. In th
 
 \section{Methodology}\label{sec:metho}
 
-\subsection{Support Vector Machine}
-Support vector machines (SVMs) \cite{cortes1995support} are supervised learning models that analyze data for classification or regression. Provided with a set of training examples, which are marked with their belonging categories, a SVM algorithm performs to build a model so as to recognize and assign testing examples to the predicted categories. 
+% \subsection{Support Vector Machine}
+% Support vector machines (SVMs) \cite{cortes1995support} are supervised learning models that analyze data for classification or regression. Provided with a set of training examples, which are marked with their belonging categories, a SVM algorithm performs to build a model so as to recognize and assign testing examples to the predicted categories. 
 
-Besides linear classification, SVMs are also able to efficiently perform non-linear classification when kernel tricks are applied\cite{boser1992training} , which will map original input into high-dimensional attribute space.
+% Besides linear classification, SVMs are also able to efficiently perform non-linear classification when kernel tricks are applied\cite{boser1992training} , which will map original input into high-dimensional attribute space.
 
-\subsection{Neural Networks}
-Neural networks, or artificial neural networks \cite{hagan1996neural}, simulate the functions of nerve cells of human brain and serve as an important computational approach in machine learning. They typically form a structure of multiple layers of basic perceptrons and support both supervised and unsupervised learning.
+% \subsection{Neural Networks}
+% Neural networks, or artificial neural networks \cite{hagan1996neural}, simulate the functions of nerve cells of human brain and serve as an important computational approach in machine learning. They typically form a structure of multiple layers of basic perceptrons and support both supervised and unsupervised learning.
 
-Neural networks have a long history, dating back to the 1940s \cite{mcculloch1943logical}. However, the idea of artificial neural networks was not popular at early days due to its limitation in solving logical calculations \cite{minsky1988perceptrons}. Modern neural networks revived in the past decade, along with the rise of deep learning \cite{bengio2009learning, schmidhuber2015deep}.
+% Neural networks have a long history, dating back to the 1940s \cite{mcculloch1943logical}. However, the idea of artificial neural networks was not popular at early days due to its limitation in solving logical calculations \cite{minsky1988perceptrons}. Modern neural networks revived in the past decade, along with the rise of deep learning \cite{bengio2009learning, schmidhuber2015deep}.
 
-\subsection{Naive Bayes}
-Naive Bayes classifier makes use of the Bayes Theorem. It is basically a conditional probability model. It is one of the simplest machine learning algorithms. Compared to Bayesian Networks, Naive Bayes is technically a special case by assuming that all features are conditionally independent from each other given the class label. One of the earliest papers that described this algorithm was from 1970s \cite{duda1973pattern}. 
+% \subsection{Naive Bayes}
+% Naive Bayes classifier makes use of the Bayes Theorem. It is basically a conditional probability model. It is one of the simplest machine learning algorithms. Compared to Bayesian Networks, Naive Bayes is technically a special case by assuming that all features are conditionally independent from each other given the class label. One of the earliest papers that described this algorithm was from 1970s \cite{duda1973pattern}. 
 
-\section{Experiment}\label{exp}
-In this project, we used \texttt{Weka} \cite{hall2009weka} to test different machine learning algorithms. For SVM, we mainly use LibSVM \cite{Chang2001}. For Artificial Neural Network, we choose Multilayer Perceptron. For Naive Bayes, we use the default Naive Bayes in \texttt{Weka}. For each algorithm, we use different parameter settings, which will be covered in this section.
+\section{Experiments}\label{sec:exp}
+The whole experiment is made up of four steps. First, data preprocessing. Second, model training with LibSVM and testing with unmodified test set. Thus we have a criterion for evaluation. Third, data modification in the test set and testing using trained libSVM model. Fourth, performance comparison. The methods for model training and data modification are already described in section \ref{sec:metho} and the rest parts will be discussed in the this section.
 
-\subsection{Datasets}
-We have two datasets, the hand-written digits dataset \cite{digitdataset} and the letter recognition dataset \cite{letterdataset}. The hand-written digits dataset has 5620 instances. For each instance, there are 1024 attributes (32x32 matrix), whose values are either 0 or 1. An example is shown in Figure \ref{fig:ex:digit}, which is clearly a `2'. After grouping every 4x4 blocks, the dimension is reduced to 64 (8x8 matrix), and each attribute ranges from 0 to 16. Another is letter recognition dataset \cite{letterdataset}. The character images were based on 20 different fonts. It has 20000 instances. For each instance, there are 16 attributes, whose values range from 0 to 15. The attributes are sophisticated, as shown in Figure \ref{fig:feature:letter}. Some examples of the fonts are shown in Figure \ref{fig:ex:letter}. More details of the datasets and features can be found by visiting the links.
+% In this project, we used \texttt{Weka} \cite{hall2009weka} to test different machine learning algorithms. For SVM, we mainly use LibSVM \cite{Chang2001}. For Artificial Neural Network, we choose Multilayer Perceptron. For Naive Bayes, we use the default Naive Bayes in \texttt{Weka}. For each algorithm, we use different parameter settings, which will be covered in this section.
+
+\subsection{Original Dataset}
+The dataset includes instances of malicious executables (computer virus) as well as non-malicious executables (normal programs). The features are extracted from real-world malicious and non-malicious executables. The dataset was published in March 2016 in UCI Machine Learning Repository. Within one year, the web hits of the dataset has already reached over 200,000. It is obvious that the dataset arouses great interest in the machine learning community.
+
+The dataset consists of 373 instances, of which 301 are malicious and 72 are benign. Each instance has 500 hex features and 30 DLL features. Notice that on the UCI webpage it claims that there are 13 DLL features but we found from the raw data that there are actually 30 of them. All the attributes are binary, meaning a certain feature exists or not.
+
+However, the primary weakness of the dataset is that the sample number is relatively low compared to other datasets. However, the goal of our project is not to exhaustively find the best machine learning model to classify malicious and non-malicious executables. Thus we think the low sample amount is tolerable. In addition, after searching online, we thought the UCI dataset is the only one available of such type of data.
+
+% We have two datasets, the hand-written digits dataset \cite{digitdataset} and the letter recognition dataset \cite{letterdataset}. The hand-written digits dataset has 5620 instances. For each instance, there are 1024 attributes (32x32 matrix), whose values are either 0 or 1. An example is shown in Figure \ref{fig:ex:digit}, which is clearly a `2'. After grouping every 4x4 blocks, the dimension is reduced to 64 (8x8 matrix), and each attribute ranges from 0 to 16. Another is letter recognition dataset \cite{letterdataset}. The character images were based on 20 different fonts. It has 20000 instances. For each instance, there are 16 attributes, whose values range from 0 to 15. The attributes are sophisticated, as shown in Figure \ref{fig:feature:letter}. Some examples of the fonts are shown in Figure \ref{fig:ex:letter}. More details of the datasets and features can be found by visiting the links.
 
 
 % \begin{figure}[htbp]
@@ -110,19 +123,22 @@ We have two datasets, the hand-written digits dataset \cite{digitdataset} and th
 % \label{fig:svm}
 % \end{figure}
 
-\subsection{Hand-written Digits Classification}
-\subsubsection{Support Vector Machine}
+\subsection{Data Preprocessing}
+The raw data is generally LibSVM-format conformant. The class attribute at the beginning of an instance marks whether it is benign or malicious. -1 stands for a malicious instance and +1 means benign. However, at the end of each instance there is an additional -1. We need to remove it before passing it to LibSVM as input.
 
-As shown in Figure \ref{fig:digit-svm}, SVM classifiers provide a good performance on the Digit dataset. In the experiment, two key parameters are tuned. One is the kernel type and the other is the complexity parameter. For kernels, the linear kernel and the non-linear polynomial kernel are tested. When the polynomial kernel is applied, 98.97\% accuracy can be achieved, and 97.92\% accuracy is achieved in cases of the linear kernel. 
+In addition, we randomly seperate the dataset into two sets. One consists of 80\% of the dataset as the training set while the rest as the test set.
+% \subsubsection{Support Vector Machine}
 
-From the figure, two results can be observed. Firstly, polynomial kernel has better performance than the linear one, regardless of values of the complexity parameter. Secondly, the complexity parameter has little effect on the SVM model in regards to the Digit dataset. 
+% As shown in Figure \ref{fig:digit-svm}, SVM classifiers provide a good performance on the Digit dataset. In the experiment, two key parameters are tuned. One is the kernel type and the other is the complexity parameter. For kernels, the linear kernel and the non-linear polynomial kernel are tested. When the polynomial kernel is applied, 98.97\% accuracy can be achieved, and 97.92\% accuracy is achieved in cases of the linear kernel. 
 
-\subsubsection{Neural Networks}
-In order to understand how the many parameters influence the performance of multilayer perceptron in classification, we decide to change only one parameter at a time. The default setting is ``-L 0.3 -M 0.2 -N 500 -V 0 -S 0 -E 20 -H a". And the parameters that we are interested in are learning rate, training time and validation threshold.
+% From the figure, two results can be observed. Firstly, polynomial kernel has better performance than the linear one, regardless of values of the complexity parameter. Secondly, the complexity parameter has little effect on the SVM model in regards to the Digit dataset. 
 
-Figure \ref{fig:digit-ann} shows the average performance for different parameter combinations. For default settings, we have the average accuracy of 92.73\%. And the root relative squared error is as low as 38.53\%. Changing validation threshold to either more or less does not affect the performance at all. And if we let training time be less, the overall accuracy lowers a little, which matches our expectation.
+% \subsubsection{Neural Networks}
+% In order to understand how the many parameters influence the performance of multilayer perceptron in classification, we decide to change only one parameter at a time. The default setting is ``-L 0.3 -M 0.2 -N 500 -V 0 -S 0 -E 20 -H a". And the parameters that we are interested in are learning rate, training time and validation threshold.
 
-It can be easily noticed that changing learning rate to 0.6 affects the performance heavily. Thus we tested with the same parameter combination again. In Figure \ref{fig:digit-ann-special}, when we ran the test again, the accuracy grew to 98.36\%. Such inconsistency in the test result showed that the performance of Multipayer Perceptron is influenced by stochastic. If we increase the stochastic by modifying the parameters, the fluctuation grows.
+% Figure \ref{fig:digit-ann} shows the average performance for different parameter combinations. For default settings, we have the average accuracy of 92.73\%. And the root relative squared error is as low as 38.53\%. Changing validation threshold to either more or less does not affect the performance at all. And if we let training time be less, the overall accuracy lowers a little, which matches our expectation.
+
+% It can be easily noticed that changing learning rate to 0.6 affects the performance heavily. Thus we tested with the same parameter combination again. In Figure \ref{fig:digit-ann-special}, when we ran the test again, the accuracy grew to 98.36\%. Such inconsistency in the test result showed that the performance of Multipayer Perceptron is influenced by stochastic. If we increase the stochastic by modifying the parameters, the fluctuation grows.
 
 % \begin{figure}[htbp]
 % \centering
@@ -148,22 +164,29 @@ It can be easily noticed that changing learning rate to 0.6 affects the performa
 % \label{fig:ann}
 % \end{figure}
 
-\subsubsection{Naive Bayes}
-The Naive Bayes works well on the Hand-written Digit dataset. In Figure \ref{fig:bayes}, K means whether to use kernel estimator, and D means whether to use supervised discretization. In Figure \ref{fig:digit-bayes}, when K=F, D=F, which is the worst case scenario, the accuracy and F-measure are still higher than 90\%. In the best case (K=T, D=F), they both exceeds 92\%.
+% \subsubsection{Naive Bayes}
+% The Naive Bayes works well on the Hand-written Digit dataset. In Figure \ref{fig:bayes}, K means whether to use kernel estimator, and D means whether to use supervised discretization. In Figure \ref{fig:digit-bayes}, when K=F, D=F, which is the worst case scenario, the accuracy and F-measure are still higher than 90\%. In the best case (K=T, D=F), they both exceeds 92\%.
 
 
-\subsection{Letter Recognition}
-\subsubsection{Support Vector Machine}
+\subsection{Experiment Conditions}
+After data preprocessing, we pass the training set to LibSVM to train a classification model. With the different cores, we will have different models. The following implementations apply to all of the models.
 
-Compared with the Digit dataset, the polynomial kernel still has a good performance on the Letter dataset as more than 95\% instances are correctly recognized. However, the accuracy from the linear kernel is much lower no matter which values of the complexity parameter are configured. From Figure \ref{fig:letter-svm}, we can see that only 85\% accuracy and F-measure are achieved when the linear kernel is used, whereas those are more than 97\% for the Digit dataset.
+Given a trained classification model, we apply it to the test set first and get the test results as a criterion for later evaluation. With the unmodified test set, we expect the performance of the model to classify malicious instances to be high enough. Otherwise, the model itself does not make sense and it is pointless to fool an inaccurate classification model.
 
-To explore an insight of which letters have large contribution to inaccurate recognition, an inaccuracy analysis by class is given (Table \ref{tbl:svm}). Although the accuracy from the polynomial kernel is much higher than the linear one, as shown in Table \ref{tbl:svm}, both of them have least accuracy on recognizing letters `H', `S', and `R'.
+After that, we apply different attribute modification methods to the test set. Notice that only malicious instances are modified since our only goal is to disguise a malicious executable as a benign one. With the different modified test sets, we re-do the testing phase with unmodified classification model. Then we compare the new test results with those of original test set and see whether any malicious instances successfully escape the detection.
+
+In the end, we compare the escape results of different modification methods to find which of them perform best and how to achieve a best performance. Meanwhile, we also do comparison of such modifications with existing anti-antivirus techniques for real-world feasibility discussion.
+% \subsubsection{Support Vector Machine}
+
+% Compared with the Digit dataset, the polynomial kernel still has a good performance on the Letter dataset as more than 95\% instances are correctly recognized. However, the accuracy from the linear kernel is much lower no matter which values of the complexity parameter are configured. From Figure \ref{fig:letter-svm}, we can see that only 85\% accuracy and F-measure are achieved when the linear kernel is used, whereas those are more than 97\% for the Digit dataset.
+
+% To explore an insight of which letters have large contribution to inaccurate recognition, an inaccuracy analysis by class is given (Table \ref{tbl:svm}). Although the accuracy from the polynomial kernel is much higher than the linear one, as shown in Table \ref{tbl:svm}, both of them have least accuracy on recognizing letters `H', `S', and `R'.
 
 
-\subsubsection{Neural Networks}
-The overall performance of Multilayer Perceptron is quite stable. The accuracy is around 82\% and the root relative squared error is around 56\%. However, there are some classes with relatively low accuracy making the average performance not so good as digit recognition. Table \ref{tbl:ann} shows the least correct classes: `G', `H' and `S'.
+% \subsubsection{Neural Networks}
+% The overall performance of Multilayer Perceptron is quite stable. The accuracy is around 82\% and the root relative squared error is around 56\%. However, there are some classes with relatively low accuracy making the average performance not so good as digit recognition. Table \ref{tbl:ann} shows the least correct classes: `G', `H' and `S'.
 
-Neural networks do a better job than the other two algorithms in recognizing `O' and `Q' and it can correctly tell `X' apart from `S'. Changing learning rate higher helps the performance with `H'.
+% Neural networks do a better job than the other two algorithms in recognizing `O' and `Q' and it can correctly tell `X' apart from `S'. Changing learning rate higher helps the performance with `H'.
 
 % \begin{wraptable}[13]{r}{0.5\textwidth}
 % \centering
@@ -191,25 +214,34 @@ Neural networks do a better job than the other two algorithms in recognizing `O'
 % \end{wraptable}
 %\vspace{10cm}
 
-\newpage
+% \newpage
 
-\subsubsection{Naive Bayes}
-Naive Bayes does not work well on the Letter Recognition dataset. From Figure \ref{fig:letter-bayes}, we can see that the highest accuracy is lower than 75\%. Generally speaking, Naive Bayes is not suitable for classifying letters.
+% \subsubsection{Naive Bayes}
+% Naive Bayes does not work well on the Letter Recognition dataset. From Figure \ref{fig:letter-bayes}, we can see that the highest accuracy is lower than 75\%. Generally speaking, Naive Bayes is not suitable for classifying letters.
 
-In this dataset, we are also interested in which letters Naive Bayes performs worst. Table \ref{tbl:bayes} shows the top 3 worst cases when using Naive Bayes with different parameters. In all three parameter settings, `H' is always one of the top 3, which means that `H' is quite hard to classify for Naive Bayes. Also, the same applies to `S' and `X', as they appear in two of the three cases.
+% In this dataset, we are also interested in which letters Naive Bayes performs worst. Table \ref{tbl:bayes} shows the top 3 worst cases when using Naive Bayes with different parameters. In all three parameter settings, `H' is always one of the top 3, which means that `H' is quite hard to classify for Naive Bayes. Also, the same applies to `S' and `X', as they appear in two of the three cases.
 
+\subsection{Results}
 
+\subsection{Result Analysis}
 
 \section{Discussion}
 
-\subsection{Evaluation Matrix}
-In our presentation, we used \texttt{root relative squared error} to evaluate the performance of our algorithms and falsely claimed that SVM was not suitable for our datasets. However, it makes little sense to evaluate this feature on  non-binary datasets. So in the report, we changed it to F-measure.
+\subsection{Real-world Feasibility}
+In this section we briefly discusses the feasibility of our modification towards the malicious executables and compare them with existing anti-antivirus methods deployed by real-world virus.
 
-\subsection{Different Libraries of SVM}
+In reality, it is much more difficult to remove features than to add features. The features to remove mostly denote the malicious behavior of a virus and are thus hard to take out. In contrast, we can easily add features as dummy code that will never be executed.
 
-In our presentation, we only discussed the performance of the polynomial kernel in SMO. To have a comprehensive understanding on the performance of SVMs, experiments based on LibSVM are performed.
+Our modification schemes in fact serves as a combination of two existing anti-antivirus methods. The first is to disguise as popular file formats such as .pdf or .docx or programs such as calc.exe or notepad.exe. The second is polymorphic virus. It mutates on each copy by adding different types of NOP instructions.
 
-Figure \ref{fig:smo-libsvm} compares the accuracy and F-measure between SMO and LibSVM when the polynomial kernel is applied. Surprisingly, although both the complexity and kernel parameters are configured as the same, the accuracy from LibSVM is higher than that from SMO by 12\%. 
+% \subsection{Evaluation Matrix}
+% In our presentation, we used \texttt{root relative squared error} to evaluate the performance of our algorithms and falsely claimed that SVM was not suitable for our datasets. However, it makes little sense to evaluate this feature on  non-binary datasets. So in the report, we changed it to F-measure.
+
+% \subsection{Different Libraries of SVM}
+
+% In our presentation, we only discussed the performance of the polynomial kernel in SMO. To have a comprehensive understanding on the performance of SVMs, experiments based on LibSVM are performed.
+
+% Figure \ref{fig:smo-libsvm} compares the accuracy and F-measure between SMO and LibSVM when the polynomial kernel is applied. Surprisingly, although both the complexity and kernel parameters are configured as the same, the accuracy from LibSVM is higher than that from SMO by 12\%. 
 
 % \begin{figure}[htbp]
 % \centering
@@ -229,12 +261,12 @@ Figure \ref{fig:smo-libsvm} compares the accuracy and F-measure between SMO and 
 % \label{fig:bayes}
 % \end{figure}
 
-\subsection{Parameters of Multilayer Perceptron}
-Multilayer Perceptron has a number of parameters. In the project, we would like to look into the following specific parameters: learning rate, training time and validation threshold. Other parameters include momentum, seed, nominalToBinaryFilter, hiddenLayers etc.
+% \subsection{Parameters of Multilayer Perceptron}
+% Multilayer Perceptron has a number of parameters. In the project, we would like to look into the following specific parameters: learning rate, training time and validation threshold. Other parameters include momentum, seed, nominalToBinaryFilter, hiddenLayers etc.
 
-Learning rate (-L) stands for the amount the weights are updated. Training time (-N) is the number of epochs to train through. If the validation set is non-zero then it can terminate the network early. Validation threshold (-E) is used to terminate validation testing. The value here dictates how many times in a row the validation set error can get worse before training is terminated.
+% Learning rate (-L) stands for the amount the weights are updated. Training time (-N) is the number of epochs to train through. If the validation set is non-zero then it can terminate the network early. Validation threshold (-E) is used to terminate validation testing. The value here dictates how many times in a row the validation set error can get worse before training is terminated.
 
-In our tests, the validation threshold does not affect the performance.
+% In our tests, the validation threshold does not affect the performance.
  
 %  \begin{table}[!htb]
 % %\begin{subtable}
@@ -283,16 +315,17 @@ In our tests, the validation threshold does not affect the performance.
 % \end{minipage}
 % %\end{subtable} 
 % \end{table}
-\section{Conclusion}
-To summarize, our algorithms performs well on the hand-written digit dataset. However, all the algorithms we test have difficulties telling similar letters apart.
 
-In particular, Naive Bayes performs badly in letter recognition when K=F, D=F. With other parameter settings, the correctness is around 75\% with small deviation among different letters. In general, it has a better performance in doing digit classification than in letter recognition.
+% \section{Reference}
+% To summarize, our algorithms performs well on the hand-written digit dataset. However, all the algorithms we test have difficulties telling similar letters apart.
 
-SVM is generally suitable for both letter recognition and digit classification. It performs best among all the three methods. Similar to another two algorithms, the letter recognition performance is a little worse than digit classification. The classes that cannot be correctly classified are: H, S and R.
+% In particular, Naive Bayes performs badly in letter recognition when K=F, D=F. With other parameter settings, the correctness is around 75\% with small deviation among different letters. In general, it has a better performance in doing digit classification than in letter recognition.
 
-Multilayer Perceptron is heavily influenced by the parameters that control the stochastics. But generally speaking, its performance is relatively stable. It is also weak in classifying some of the letters, which are G, H and S.
+% SVM is generally suitable for both letter recognition and digit classification. It performs best among all the three methods. Similar to another two algorithms, the letter recognition performance is a little worse than digit classification. The classes that cannot be correctly classified are: H, S and R.
 
-\newpage
+% Multilayer Perceptron is heavily influenced by the parameters that control the stochastics. But generally speaking, its performance is relatively stable. It is also weak in classifying some of the letters, which are G, H and S.
+
+% \newpage
 \bibliographystyle{plain}
 \bibliography{Group10}
 \end{document}
