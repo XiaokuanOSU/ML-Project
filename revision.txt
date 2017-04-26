@@ -1,0 +1,2 @@
+1. not accuracy, better: precision/recall
+2. more machine learning perspective (try different ML algorithms? train/test for 10 times? different feature selections?)
