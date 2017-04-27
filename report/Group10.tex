@@ -159,9 +159,16 @@ However, the primary weakness of the dataset is that the sample number is relati
 % \end{figure}
 
 
-\subsection{Work Flow}
+\subsection{Workflow}
 The whole experiment is made up of four steps. %First, data preprocessing. Second, model training with LibSVM and testing with unmodified test set. Thus we have a criterion for evaluation. Third, data modification in the test set and testing using trained libSVM model. We need to determine which features we want to add or delete for malicious samples, which is the key of our experiment. Fourth, performance comparison. 
 We will go through each step in detail.
+
+\begin{figure}[htbp]
+\label{fig:workflow}
+\centering
+\includegraphics*[width=\textwidth]{fig/workflow.png}
+\caption{Workflow}
+\end{figure}
 
 \subsubsection{Data Preprocessing}
 The raw data is generally LibSVM-format conformant. The class attribute at the beginning of an instance marks whether it is benign or malicious. -1 stands for a malicious instance and +1 means benign. However, at the end of each instance there is an additional -1. We need to remove it before passing it to LibSVM as input.
@@ -239,7 +246,23 @@ We can remove last N attributes in \texttt{RRList} to the malicious samples, sho
 \subsubsection{Adding Attributes}
 The first strategy we tried was to add the top N attributes according to their RR. We tried different N numbers and evaluated how they performed with precision and recall. As shown in figure xx and figure yy, there is an obvious performance drop when N reaches about 35?. When less than 25? attributes are added, the classifier stays robust to the changes and the malicious instances are not able to escape the detection. However, take N=35? as a threshold, when more than threshold attributes are added, almost all the malicious instances successfully fool the classifier to think they are benign.
 
-Precision: Recall: 
+\begin{figure}[htbp]
+\centering
+
+\begin{subfigure}[htbp]{0.48\columnwidth}
+\includegraphics*[width=\textwidth]{fig/addattrPR.eps}
+\caption{Add attributes}
+\label{fig:add}
+\end{subfigure}
+\hfill
+\begin{subfigure}[htbp]{0.48\columnwidth}
+\includegraphics*[width=\textwidth]{fig/subattrPR.eps}
+\caption{Remove attributes}
+\label{fig:sub}
+\end{subfigure}
+\caption{Relative Ratio Evaluation}
+\label{fig:RRevaluation}
+\end{figure}
 
 \subsubsection{Removing Attributes}
 Similar to adding attributes, we did experiments on removing them as well. We tried different N numbers and evaluated how they performed with precision and recall. The evaluation result is also close to adding them. When removing less than threshold number of attributes, none of the malicious instances are mis-classified. But when the number of removed attributes increases to over threshold, all of them succeeds in escaping the detection.
