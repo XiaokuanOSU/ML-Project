@@ -32,20 +32,24 @@
 \section{Introduction}
 
 \subsection{Problem Description}
-Our group wants to solve the problem of classifying hand-written digits and  black-and-white rectangular pixel-displayed letters. We have two datasets from UCI machine learning repository \cite{Lichman2013}. One is hand-written digits dataset \cite{digitdataset}. Another is letter recognition dataset \cite{letterdataset}. We will introduce them in more detail in Section \ref{exp}.
+There are a bunch of anti-virus software on market nowadays, such as Norton and McAfee. They can detect malicious apps/binaries and prevent them from jeopardizing the user's data. However, in our project, we are not aiming at improving the detection rate of anti-virus software; instead, we want to study from a virus' perspective: how should a virus disguise itself to evade the detection? To answer this question, we designed a novel evasion scheme and conducted experiments the test its efficiency on a dataset from UCI Machine Learning Repository. We will introduce them in more detail in Section \ref{exp}.
 
 \subsection{Classification Algorithms}
-% In this report, we test three machine learning  algorithms, i.e., Support Vector Machine (SVM), Neural Networks, and Naive Bayes. We will present the detail of algorithms in Section \ref{sec:metho}.
+In this report, we use LibSVM \cite{CC01a} as our machine learning  algorithm, which implements Support Vector Machine (SVM). To compare with our feature selection scheme, we use Weka's \texttt{weka.attributeSelection.CfsSubsetEval} module as the feature selection method. It implements correlation-based feature selection. We will present the detail of algorithms in Section \ref{sec:metho}.
 
 \subsection{Hypothesis}
 
 \subsection{Originality}
 
 \subsection{Result Summary}
+Our results show that our scheme works well and can truly fool the detector.
 % For the hand-written digit dataset, after tuning the parameters, the three classifiers can achieve 98.97\%, 93.27\%, 92.02\%  accuracy. For the letter dataset, they can reach 95.33\%, 82.77\%, 74.18\% accuracy. We only submit a \texttt{pdf} file and a \texttt{tex} file to Carmen. For a more detailed view of our repository, please visit our repo on github \footnote{https://github.com/XiaokuanOSU/AI2report}.
 
 \section{Background}
-% The hand-written digit dataset was first used in \cite{kaynak1995methods}. In the paper they combined different classifiers to obtain a better performance.  The letter recognition dataset was first used in \cite{frey1991letter}. They generated classification rules to distinguish different letters.
+The author of the dataset we used generated the dataset based on the n-gram feature set construction from Masud et al.'s paper \cite{masud2007hybrid}. In this paper, they proposed a new way to construct features for binary files, called N-gram Features. An n-gram may be either a sequence of n bytes or n assembly instructions, or n DLL function calls, depending on whether they want to extract features from binary or assembly program, or DLL call list. For example, the 3-grams corresponding to the 4 bytes sequence "a1b2c3d4" are "a1b2c3" and "b2c3d4". They constructed Binary/Assembly/DLL N-gram feature set, and proposed a hybrid model to combine the three feature sets. Then, they choose best 500 features for each set based on entropy gain. Later on, they use LibSVM to test their models. The hybrid model works best for both datasets (Accuracy:96.30\%, 96.15\%).
+
+There is an older paper about detecting malicious executables by Schultz et al. \cite{schultz2001data}. In their paper, they constructed DLLs, GNU Strings, and Byte Sequence features. The DLL and Byte Sequence features are similar to the way of constructing our dataset, but they did not use N-gram feature. They further tested their features using different machine learning algorithms, i.e., RIPPER, Naive Bayes, and Multi-Naive Bayes. The best one (Multi-Naive Bayes) can achieve 97.76\% detection rate.
+
 
 % \begin{figure}[htbp]
 % \centering
@@ -72,12 +76,22 @@ Our group wants to solve the problem of classifying hand-written digits and  bla
 
 \section{Methodology}\label{sec:metho}
 
-% \subsection{Support Vector Machine}
-% Support vector machines (SVMs) \cite{cortes1995support} are supervised learning models that analyze data for classification or regression. Provided with a set of training examples, which are marked with their belonging categories, a SVM algorithm performs to build a model so as to recognize and assign testing examples to the predicted categories. 
+\subsection{Tools}
+\subsubsection{LibSVM}
+LibSVM \cite{CC01a} is an open-source software that implements Support Vector Machine (SVM) algorithm \cite{cortes1995support}. It is one of the most popular tools when it comes to SVM implementation. It is the main tool that we use to test the performance our evasion scheme. 
+
+\subsubsection{Weka}
+Weka \cite{hall2009weka} is a collection of machine learning algorithms for data mining tasks. It has a nice GUI interface and can accept different file inputs (e.g, .arff, .csv, etc.). In our project, our main task is to find important features to add or delete (feature selection). Therefore, we use Weka as a tool for feature selection and compare the performance with our feature selection scheme.
+
+\subsection{Algorithms}
+\subsubsection{SVM}
+SVM \cite{cortes1995support} is a supervised learning model that analyzes data for classification or regression. Provided with a set of training examples, which are marked with their belonging categories, a SVM algorithm performs to build a model so as to recognize and assign testing examples to the predicted categories. 
+
+\subsubsection{Correlation-based Feature Selection}
+We choose the \texttt{weka.attributeSelection.CfsSubsetEval} module as the feature selection method to compare with our scheme. It implements correlation-based feature selection, which evaluates the worth of a subset of attributes by considering the individual predictive ability of each feature along with the degree of redundancy between them \cite{hall1999correlation}.
 
 % Besides linear classification, SVMs are also able to efficiently perform non-linear classification when kernel tricks are applied\cite{boser1992training} , which will map original input into high-dimensional attribute space.
 
-% \subsection{Neural Networks}
 % Neural networks, or artificial neural networks \cite{hagan1996neural}, simulate the functions of nerve cells of human brain and serve as an important computational approach in machine learning. They typically form a structure of multiple layers of basic perceptrons and support both supervised and unsupervised learning.
 
 % Neural networks have a long history, dating back to the 1940s \cite{mcculloch1943logical}. However, the idea of artificial neural networks was not popular at early days due to its limitation in solving logical calculations \cite{minsky1988perceptrons}. Modern neural networks revived in the past decade, along with the rise of deep learning \cite{bengio2009learning, schmidhuber2015deep}.
@@ -95,7 +109,7 @@ The dataset includes instances of malicious executables (computer virus) as well
 
 The dataset consists of 373 instances, of which 301 are malicious and 72 are benign. Each instance has 500 hex features and 30 DLL features. Notice that on the UCI webpage it claims that there are 13 DLL features but we found from the raw data that there are actually 30 of them. All the attributes are binary, meaning a certain feature exists or not.
 
-However, the primary weakness of the dataset is that the sample number is relatively low compared to other datasets. However, the goal of our project is not to exhaustively find the best machine learning model to classify malicious and non-malicious executables. Thus we think the low sample amount is tolerable. In addition, after searching online, we thought the UCI dataset is the only one available of such type of data.
+However, the primary weakness of the dataset is that the sample number is relatively low. However, the goal of our project is not to exhaustively find the best machine learning model to classify malicious and non-malicious executables. Thus we think the low sample amount is tolerable. In addition, after searching online, the UCI dataset is the only dataset available that do not require extracting features by ourselves.
 
 % We have two datasets, the hand-written digits dataset \cite{digitdataset} and the letter recognition dataset \cite{letterdataset}. The hand-written digits dataset has 5620 instances. For each instance, there are 1024 attributes (32x32 matrix), whose values are either 0 or 1. An example is shown in Figure \ref{fig:ex:digit}, which is clearly a `2'. After grouping every 4x4 blocks, the dimension is reduced to 64 (8x8 matrix), and each attribute ranges from 0 to 16. Another is letter recognition dataset \cite{letterdataset}. The character images were based on 20 different fonts. It has 20000 instances. For each instance, there are 16 attributes, whose values range from 0 to 15. The attributes are sophisticated, as shown in Figure \ref{fig:feature:letter}. Some examples of the fonts are shown in Figure \ref{fig:ex:letter}. More details of the datasets and features can be found by visiting the links.
 
@@ -168,7 +182,7 @@ In addition, we randomly seperate the dataset into two sets. One consists of 80\
 % The Naive Bayes works well on the Hand-written Digit dataset. In Figure \ref{fig:bayes}, K means whether to use kernel estimator, and D means whether to use supervised discretization. In Figure \ref{fig:digit-bayes}, when K=F, D=F, which is the worst case scenario, the accuracy and F-measure are still higher than 90\%. In the best case (K=T, D=F), they both exceeds 92\%.
 
 
-\subsection{Experiment Conditions}
+\subsection{Work Flow}
 After data preprocessing, we pass the training set to LibSVM to train a classification model. With the different cores, we will have different models. The following implementations apply to all of the models.
 
 Given a trained classification model, we apply it to the test set first and get the test results as a criterion for later evaluation. With the unmodified test set, we expect the performance of the model to classify malicious instances to be high enough. Otherwise, the model itself does not make sense and it is pointless to fool an inaccurate classification model.
