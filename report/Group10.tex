@@ -26,7 +26,7 @@
 
 \maketitle
 \section*{Abstract}
-% In this project, we use different classification algorithms to classify hand-written digits and pixel-displayed letters. The algorithms we use are Naive Bayes, Support Vector Machine and Artificial Neural Networks. For each algorithm, we tune different parameters in order to achieve a better performance. We use accuracy and F-measure to evaluate the performance. Generally speaking, SVM performs best among the three, and Naive Bayes does not work well. 
+In this project, we intend to explore the classification-based virus scanners from the perspective of virus. We developed effective anti-antivirus schemes against a known classification model as the scanner. By adding or removing key attributes from the malicious executable instances, we are able to fool the scanner into classifying a malicious instance as a non-malicious one. We did exploration about how to choose the attributes to be modified and designed our self-defined Relative-Ratio-based feature selection. We also compared our method with the feature selection methods from Weka and LibSVM.
 
 
 \section{Introduction}
@@ -35,10 +35,10 @@
 There are a bunch of anti-virus software on market nowadays, such as Norton and McAfee. They can detect malicious apps/binaries and prevent them from jeopardizing the user's data. However, in our project, we are not aiming at improving the detection rate of anti-virus software; instead, we want to study from a virus' perspective: how should a virus disguise itself to evade the detection? To answer this question, we designed a novel evasion scheme and conducted experiments the test its efficiency on a dataset from UCI Machine Learning Repository. We will introduce them in more detail in Section \ref{sec:exp}.
 
 \subsection{Classification Algorithms}
-In this report, we use LibSVM \cite{CC01a} as our machine learning  algorithm, which implements Support Vector Machine (SVM). To compare with our feature selection scheme, we use Weka's \texttt{weka.attributeSelection.CfsSubsetEval} module as the feature selection method. It implements correlation-based feature selection. We will present the detail of algorithms in Section \ref{sec:metho}.
+In this project, we use LibSVM \cite{CC01a} as our machine learning  algorithm, which implements Support Vector Machine (SVM). To compare with our feature selection scheme, we use Weka's \texttt{weka.attributeSelection.CfsSubsetEval} module as the feature selection method. It implements correlation-based feature selection. We will present the detail of algorithms in Section \ref{sec:metho}.
 
 \subsection{Assumptions} \label{sec:assumption}
-Known Model, Known Training set
+We make reasonable assumptions in this project. The classifier should be already known to the attacker and will not change after it is trained. Thus, in experiments we assume that the training set and classification algorithm are both known and the classification model can be trained by the attacker. After the attacker does change to the malicious executables, the classification model remains and will not be re-trained using the modified data.
 
 \subsection{Originality}
 
@@ -93,14 +93,6 @@ We choose the \texttt{weka.attributeSelection.CfsSubsetEval} module as the featu
 
 \subsubsection{Relative Ratio Feature Selection}
 In this project, we came up with a novel way to select features to modify, which is specific to this project only. We will propose our method in detail in Section \ref{sec:exp}.
-% Besides linear classification, SVMs are also able to efficiently perform non-linear classification when kernel tricks are applied\cite{boser1992training} , which will map original input into high-dimensional attribute space.
-
-% Neural networks, or artificial neural networks \cite{hagan1996neural}, simulate the functions of nerve cells of human brain and serve as an important computational approach in machine learning. They typically form a structure of multiple layers of basic perceptrons and support both supervised and unsupervised learning.
-
-% Neural networks have a long history, dating back to the 1940s \cite{mcculloch1943logical}. However, the idea of artificial neural networks was not popular at early days due to its limitation in solving logical calculations \cite{minsky1988perceptrons}. Modern neural networks revived in the past decade, along with the rise of deep learning \cite{bengio2009learning, schmidhuber2015deep}.
-
-% \subsection{Naive Bayes}
-% Naive Bayes classifier makes use of the Bayes Theorem. It is basically a conditional probability model. It is one of the simplest machine learning algorithms. Compared to Bayesian Networks, Naive Bayes is technically a special case by assuming that all features are conditionally independent from each other given the class label. One of the earliest papers that described this algorithm was from 1970s \cite{duda1973pattern}. 
 
 \section{Experiments}\label{sec:exp}
 % The whole experiment is made up of four steps. First, data preprocessing. Second, model training with LibSVM and testing with unmodified test set. Thus we have a criterion for evaluation. Third, data modification in the test set and testing using trained libSVM model. Fourth, performance comparison. The methods for model training and data modification are already described in section \ref{sec:metho} and the rest parts will be discussed in the this section.
@@ -141,19 +133,6 @@ However, the primary weakness of the dataset is that the sample number is relati
 % \label{fig:svm}
 % \end{figure}
 
-% In addition, we randomly seperate the dataset into two sets. One consists of 80\% of the dataset as the training set while the rest as the test set.
-% \subsubsection{Support Vector Machine}
-
-% As shown in Figure \ref{fig:digit-svm}, SVM classifiers provide a good performance on the Digit dataset. In the experiment, two key parameters are tuned. One is the kernel type and the other is the complexity parameter. For kernels, the linear kernel and the non-linear polynomial kernel are tested. When the polynomial kernel is applied, 98.97\% accuracy can be achieved, and 97.92\% accuracy is achieved in cases of the linear kernel. 
-
-% From the figure, two results can be observed. Firstly, polynomial kernel has better performance than the linear one, regardless of values of the complexity parameter. Secondly, the complexity parameter has little effect on the SVM model in regards to the Digit dataset. 
-
-% \subsubsection{Neural Networks}
-% In order to understand how the many parameters influence the performance of multilayer perceptron in classification, we decide to change only one parameter at a time. The default setting is ``-L 0.3 -M 0.2 -N 500 -V 0 -S 0 -E 20 -H a". And the parameters that we are interested in are learning rate, training time and validation threshold.
-
-% Figure \ref{fig:digit-ann} shows the average performance for different parameter combinations. For default settings, we have the average accuracy of 92.73\%. And the root relative squared error is as low as 38.53\%. Changing validation threshold to either more or less does not affect the performance at all. And if we let training time be less, the overall accuracy lowers a little, which matches our expectation.
-
-% It can be easily noticed that changing learning rate to 0.6 affects the performance heavily. Thus we tested with the same parameter combination again. In Figure \ref{fig:digit-ann-special}, when we ran the test again, the accuracy grew to 98.36\%. Such inconsistency in the test result showed that the performance of Multipayer Perceptron is influenced by stochastic. If we increase the stochastic by modifying the parameters, the fluctuation grows.
 
 % \begin{figure}[htbp]
 % \centering
@@ -178,9 +157,6 @@ However, the primary weakness of the dataset is that the sample number is relati
 % \caption{Performance of Multilayer Perceptron}
 % \label{fig:ann}
 % \end{figure}
-
-% \subsubsection{Naive Bayes}
-% The Naive Bayes works well on the Hand-written Digit dataset. In Figure \ref{fig:bayes}, K means whether to use kernel estimator, and D means whether to use supervised discretization. In Figure \ref{fig:digit-bayes}, when K=F, D=F, which is the worst case scenario, the accuracy and F-measure are still higher than 90\%. In the best case (K=T, D=F), they both exceeds 92\%.
 
 
 \subsection{Work Flow}
@@ -259,19 +235,19 @@ We can remove last N attributes in \texttt{RRList} to the malicious samples, sho
 % \end{wraptable}
 %\vspace{10cm}
 
-% \newpage
-
-% \subsubsection{Naive Bayes}
-% Naive Bayes does not work well on the Letter Recognition dataset. From Figure \ref{fig:letter-bayes}, we can see that the highest accuracy is lower than 75\%. Generally speaking, Naive Bayes is not suitable for classifying letters.
-
-% In this dataset, we are also interested in which letters Naive Bayes performs worst. Table \ref{tbl:bayes} shows the top 3 worst cases when using Naive Bayes with different parameters. In all three parameter settings, `H' is always one of the top 3, which means that `H' is quite hard to classify for Naive Bayes. Also, the same applies to `S' and `X', as they appear in two of the three cases.
-
 \subsection{Relative Ratio Evaluation}
-\subsubsection{Adding Attributes} Precision: Recall: 
+\subsubsection{Adding Attributes}
+The first strategy we tried was to add the top N attributes according to their RR. We tried different N numbers and evaluated how they performed with precision and recall. As shown in figure xx and figure yy, there is an obvious performance drop when N reaches about 35?. When less than 25? attributes are added, the classifier stays robust to the changes and the malicious instances are not able to escape the detection. However, take N=35? as a threshold, when more than threshold attributes are added, almost all the malicious instances successfully fool the classifier to think they are benign.
+
+Precision: Recall: 
+
 \subsubsection{Removing Attributes}
+Similar to adding attributes, we did experiments on removing them as well. We tried different N numbers and evaluated how they performed with precision and recall. The evaluation result is also close to adding them. When removing less than threshold number of attributes, none of the malicious instances are mis-classified. But when the number of removed attributes increases to over threshold, all of them succeeds in escaping the detection.
+
+If we do further comparison between adding and removing attributes, as shown in figure zz, the threshold of removing attributes turns out to be lower than that of adding attributes. This suggests that removing attributes is easier to fool the classification-based virus detector than adding attributes.
 
 \subsection{Comparison with Correlation-based Feature Selection}
-
+In order to compare our RR-based feature selection with correlation-based feature selection, we specified the same number of attributes to be added and applied the different feature selection methods. Then we record and compare the performance of the classifier towards the different modified test set. Judging from figure xx, we are able to see that ...
 
 \section{Discussion}
 
@@ -285,15 +261,8 @@ Our modification schemes in fact serves as a combination of two existing anti-an
 \subsection{Defense Mechanisms}
 
 \section{Conclusion}
+By modifying the top N attributes according to our self-defined RR or correlation-based feature selection mechanisms, we are able to fool the given SVM model into mistakenly classifying a malicious executable as a non-malicious one. Removing attributes works better than adding them, but in practice the difficulty of adding features is lower than that of removing. In real world scenario, our hiding scheme serves as the combination of two existing schemes. Thus it is feasible in real world under the given assumptions.
 
-% \subsection{Evaluation Matrix}
-% In our presentation, we used \texttt{root relative squared error} to evaluate the performance of our algorithms and falsely claimed that SVM was not suitable for our datasets. However, it makes little sense to evaluate this feature on  non-binary datasets. So in the report, we changed it to F-measure.
-
-% \subsection{Different Libraries of SVM}
-
-% In our presentation, we only discussed the performance of the polynomial kernel in SMO. To have a comprehensive understanding on the performance of SVMs, experiments based on LibSVM are performed.
-
-% Figure \ref{fig:smo-libsvm} compares the accuracy and F-measure between SMO and LibSVM when the polynomial kernel is applied. Surprisingly, although both the complexity and kernel parameters are configured as the same, the accuracy from LibSVM is higher than that from SMO by 12\%. 
 
 % \begin{figure}[htbp]
 % \centering
@@ -313,12 +282,6 @@ Our modification schemes in fact serves as a combination of two existing anti-an
 % \label{fig:bayes}
 % \end{figure}
 
-% \subsection{Parameters of Multilayer Perceptron}
-% Multilayer Perceptron has a number of parameters. In the project, we would like to look into the following specific parameters: learning rate, training time and validation threshold. Other parameters include momentum, seed, nominalToBinaryFilter, hiddenLayers etc.
-
-% Learning rate (-L) stands for the amount the weights are updated. Training time (-N) is the number of epochs to train through. If the validation set is non-zero then it can terminate the network early. Validation threshold (-E) is used to terminate validation testing. The value here dictates how many times in a row the validation set error can get worse before training is terminated.
-
-% In our tests, the validation threshold does not affect the performance.
  
 %  \begin{table}[!htb]
 % %\begin{subtable}
