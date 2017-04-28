@@ -16,7 +16,7 @@
 %\usepackage{minipage}
 \def \hfillx {\hspace*{-\textwidth} \hfill}
 
-\title{Evading the Machine Learning Detector: A Virus’ Perspective}
+\title{Evading the Machine Learning Detector:\\ from the Perspective of a Virus}
 \author{Group 10 \\ Yuan Xiao, Xiaokuan Zhang}
 \date{04/27/2017}
 
@@ -26,7 +26,7 @@
 
 \maketitle
 \section*{Abstract}
-In this project, we intend to explore the classification-based virus scanners from the perspective of virus. We developed effective anti-antivirus schemes against a known classification model as the scanner. By adding or removing key attributes from the malicious executable instances, we are able to fool the scanner into classifying a malicious instance as a non-malicious one. We did exploration about how to choose the attributes to be modified and designed our self-defined Relative-Ratio-based feature selection. We also compared our method with the feature selection methods from Weka and LibSVM.
+In this project, we intend to explore the classification-based virus scanners from the perspective of virus. We developed effective anti-antivirus schemes against a known classification model as the detector. By adding or removing key attributes from the malicious executable instances, we are able to fool the detector into classifying malicious instances as non-malicious ones. We did exploration on how to choose the attributes to be modified and designed our self-defined Relative-Ratio-based feature selection. We also compared our method with the feature selection methods from Weka and LibSVM.
 
 
 \section{Introduction}
@@ -35,15 +35,18 @@ In this project, we intend to explore the classification-based virus scanners fr
 There are a bunch of anti-virus software on market nowadays, such as Norton and McAfee. They can detect malicious apps/binaries and prevent them from jeopardizing the user's data. However, in our project, we are not aiming at improving the detection rate of anti-virus software; instead, we want to study from a virus' perspective: how should a virus disguise itself to evade the detection? To answer this question, we designed a novel evasion scheme and conducted experiments the test its efficiency on a dataset from UCI Machine Learning Repository. We will introduce them in more detail in Section \ref{sec:exp}.
 
 \subsection{Classification Algorithms}
-In this project, we use LibSVM \cite{CC01a} as our machine learning  algorithm, which implements Support Vector Machine (SVM). To compare with our feature selection scheme, we use Weka's \texttt{weka.attributeSelection.CfsSubsetEval} module as the feature selection method. It implements correlation-based feature selection. We will present the detail of algorithms in Section \ref{sec:metho}.
+In this project, we use LibSVM \cite{CC01a} as our machine learning  algorithm, which implements Support Vector Machine (SVM). To compare with our feature selection scheme, we use Weka's \texttt{weka.attributeSelection.}
+\texttt{CfsSubsetEval} module, which implements correlation-based feature selection. Also, we use LibSVM's feature selection tool to perform feature selection. We will present the detail of algorithms in Section \ref{sec:metho}.
 
 \subsection{Assumptions} \label{sec:assumption}
 We make reasonable assumptions in this project. The classifier should be already known to the attacker and will not change after it is trained. Also, in experiments we assume that the training set and classification algorithm are both known and the classification model can be trained by the attacker. After the attacker modifies the malicious executables, the classification model remains and will not be re-trained using the modified data.
 
 
 \subsection{Result Summary}
-Our results show that our scheme works well and can truly fool the detector.
-% For the hand-written digit dataset, after tuning the parameters, the three classifiers can achieve 98.97\%, 93.27\%, 92.02\%  accuracy. For the letter dataset, they can reach 95.33\%, 82.77\%, 74.18\% accuracy. We only submit a \texttt{pdf} file and a \texttt{tex} file to Carmen. For a more detailed view of our repository, please visit our repo on github \footnote{https://github.com/XiaokuanOSU/AI2report}.
+Our results show that our \texttt{Relative Ratio} feature selection scheme works well and can truly fool the detector. By only modifying 25 attributes out of 530, the performance of SVM would drop to baseline. Also, in this project, it works better than other feature selection methods.
+% For the hand-written digit dataset, after tuning the parameters, the three classifiers can achieve 98.97\%, 93.27\%, 92.02\%  accuracy. For the letter dataset, they can reach 95.33\%, 82.77\%, 74.18\% accuracy. 
+
+We only submit a \texttt{pdf} file and a \texttt{tex} file to Carmen. For a more detailed view of our repository, please visit our repo on github \footnote{https://github.com/XiaokuanOSU/ML-Project}.
 
 \section{Background}
 The author of the dataset we used generated the dataset based on the n-gram feature set construction from Masud et al.'s paper \cite{masud2007hybrid}. In this paper, they proposed a new way to construct features for binary files, called N-gram Features. An n-gram may be either a sequence of n bytes or n assembly instructions, or n DLL function calls, depending on whether they want to extract features from binary or assembly program, or DLL call list. For example, the 3-grams corresponding to the 4 bytes sequence "a1b2c3d4" are "a1b2c3" and "b2c3d4". They constructed Binary/Assembly/DLL N-gram feature set, and proposed a hybrid model to combine the three feature sets. Then, they choose best 500 features for each set based on entropy gain. Later on, they use LibSVM to test their models. The hybrid model works best for both datasets (Accuracy:96.30\%, 96.15\%).
@@ -51,28 +54,6 @@ The author of the dataset we used generated the dataset based on the n-gram feat
 There is an older paper about detecting malicious executables by Schultz et al. \cite{schultz2001data}. In their paper, they constructed DLLs, GNU Strings, and Byte Sequence features. The DLL and Byte Sequence features are similar to the way of constructing our dataset, but they did not use N-gram feature. They further tested their features using different machine learning algorithms, i.e., RIPPER, Naive Bayes, and Multi-Naive Bayes. The best one (Multi-Naive Bayes) can achieve 97.76\% detection rate.
 
 
-% \begin{figure}[htbp]
-% \centering
-
-% \begin{subfigure}[htbp]{0.32\columnwidth}
-% \includegraphics*[width=\textwidth]{fig/ex_digit}
-% \caption{A Digit Example: 2}
-% \label{fig:ex:digit}
-% \end{subfigure}
-% \hfill
-% \begin{subfigure}[htbp]{0.32\columnwidth}
-% \includegraphics*[width=\textwidth]{fig/ex_letter}
-% \caption{Letter Examples}
-% \label{fig:ex:letter}
-% \end{subfigure}
-% \hfill
-% \begin{subfigure}[htbp]{0.32\columnwidth}
-% \includegraphics*[width=\textwidth]{fig/feature_letter}
-% \caption{Features of Letters}
-% \label{fig:feature:letter}
-% \end{subfigure}
-% \caption{Examples and Features}
-% \end{figure}
 
 \section{Methodology}\label{sec:metho}
 
@@ -82,6 +63,24 @@ LibSVM \cite{CC01a} is an open-source software that implements Support Vector Ma
 
 \subsubsection{Weka}
 Weka \cite{hall2009weka} is a collection of machine learning algorithms for data mining tasks. It has a nice GUI interface and can accept different file inputs (e.g, .arff, .csv, etc.). In our project, our main task is to find important features to add or delete (feature selection). Therefore, we use Weka as a tool for feature selection and compare the performance with our feature selection scheme.
+
+
+\begin{figure}[htbp]
+\centering
+\begin{subfigure}[htbp]{0.4\columnwidth}
+\includegraphics*[width=\textwidth]{fig/hex}
+\caption{Hex Feature}
+\label{fig:hex}
+\end{subfigure}
+\hfill
+\begin{subfigure}[htbp]{0.57\columnwidth}
+\includegraphics*[width=\textwidth]{fig/DLL}
+\caption{DLL Feature}
+\label{fig:DLL}
+\end{subfigure}
+\caption{Examples of Hex and DLL Features}
+\label{fig:hexDLL}
+\end{figure}
 
 \subsection{Algorithms}
 \subsubsection{SVM}
@@ -108,59 +107,6 @@ The dataset consists of 373 instances, of which 301 are malicious and 72 are ben
 However, the primary weakness of the dataset is that the sample number is relatively low. However, the goal of our project is not to exhaustively find the best machine learning model to classify malicious and non-malicious executables. Thus we think the low sample amount is tolerable. In addition, after searching online, the UCI dataset is the only dataset available that do not require extracting features by ourselves.
 
 
-
-\begin{figure}[htbp]
-\centering
-\begin{subfigure}[htbp]{0.4\columnwidth}
-\includegraphics*[width=\textwidth]{fig/hex}
-\caption{Hex Feature}
-\label{fig:hex}
-\end{subfigure}
-\hfill
-\begin{subfigure}[htbp]{0.57\columnwidth}
-\includegraphics*[width=\textwidth]{fig/DLL}
-\caption{DLL Feature}
-\label{fig:DLL}
-\end{subfigure}
-\label{fig:hexDLL}
-\end{figure}
-
-% \hfill
-% \begin{subfigure}[htbp]{0.46\columnwidth}
-% \includegraphics*[width=\textwidth]{fig/smo_libsvm}
-% \caption{Comparison between SMO and LibSVM}
-% \label{fig:smo-libsvm}
-% \end{subfigure}
-% \caption{Performance of Support Vector Machine}
-% \label{fig:svm}
-% \end{figure}
-
-
-% \begin{figure}[htbp]
-% \centering
-
-% \begin{subfigure}[htbp]{0.46\columnwidth}
-% \includegraphics*[width=\textwidth]{fig/digit_ANN}
-% \caption{Digit Classification}
-% \label{fig:digit-ann}
-% \end{subfigure}
-% \hfill
-% \begin{subfigure}[htbp]{0.46\columnwidth}
-% \includegraphics*[width=\textwidth]{fig/digit_ANN_special}
-% \caption{L=0.6 in Digit Classification}
-% \label{fig:digit-ann-special}
-% \end{subfigure}
-% \hfill
-% \begin{subfigure}[htbp]{0.46\columnwidth}
-% \includegraphics*[width=\textwidth]{fig/letter_ANN}
-% \caption{Letter Recognition}
-% \label{fig:letter-ann}
-% \end{subfigure}
-% \caption{Performance of Multilayer Perceptron}
-% \label{fig:ann}
-% \end{figure}
-
-
 \subsection{Workflow}
 The whole experiment is made up of four steps. %First, data preprocessing. Second, model training with LibSVM and testing with unmodified test set. Thus we have a criterion for evaluation. Third, data modification in the test set and testing using trained libSVM model. We need to determine which features we want to add or delete for malicious samples, which is the key of our experiment. Fourth, performance comparison. 
 We will go through each step in detail.
@@ -176,10 +122,25 @@ We will go through each step in detail.
 The raw data is generally LibSVM-format conformant. The class attribute at the beginning of an instance marks whether it is benign or malicious. -1 stands for a malicious instance and +1 means benign. However, at the end of each instance there is an additional -1. We need to remove it before passing it to LibSVM as input.
 
 \subsubsection{Model Training \& Testing}
-After data preprocessing, we pass the training set to LibSVM to train a classification model. In \ref{sec:assumption}, we mentioned that the model is known to the attacker, and it will not change when the test set changes. %With the different cores, we will have different models. The following implementations apply to all of the models.
+After data preprocessing, the original dataset is split into two parts: 80\% as training set and 20\% as test set. The distribution is shown in Table \ref{tbl:dataset}. We pass the training set to LibSVM to train a classification model. In Section \ref{sec:assumption}, we mentioned that the model is known to the attacker, and it will not change when the test set changes. %With the different cores, we will have different models. The following implementations apply to all of the models.
 
 Given a trained classification model, we apply it to the test set first and get the test results as a criterion for later evaluation. With the unmodified test set, we expect the performance of the model to classify malicious instances to be high enough. Otherwise, the model itself does not make sense and it is pointless to fool an inaccurate classification model.
 
+\begin{wraptable}[8]{r}{0.4\textwidth}
+\centering
+\begin{tabular}{c  c  c c} \hline
+% centering table
+% creating 10 columns
+% inserting double-line 
+
+Dataset & +1 & -1 & Total\\\hline
+{Original Data}& 72 & 301 & 373 \\
+{Training Set} & 59 & 239 & 298 \\
+{Test Set} & 13 & 62 & 75 \\\hline
+\end{tabular}
+\caption{Data Distribution} % title name of the table
+\label{tbl:dataset}
+\end{wraptable}
 
 \subsubsection{Attribute Modification}
 Now that we have a model, we can apply different attribute modification methods to the test set. Notice that only malicious instances are modified since our only goal is to disguise a malicious executable as a benign one. More specifically, we use different feature selection methods to find the right attributes to modify (add or delete attributes). With different modified test sets, we re-do the testing phase with unmodified classification model. 
@@ -188,9 +149,9 @@ Now that we have a model, we can apply different attribute modification methods 
 In the end, we compare the new test result with the original one and see whether the detection rate drops. Moreover, we compare the escape results of different modification methods to find which one performs best. 
 
 \subsection{Relative Ratio Feature Selection}
-At first, we chose to modify only one attribute. We modified each of the 530 attribute (add or delete), but none of them affected the performance of the original model. We cannot simply choose any two of them, because there are too many combinations. To solve this problem, we came up with a novel way to perform the feature selection, and we call it Relative Ratio feature selection. In this part, we will introduce this method in detail.
+At first, we chose to modify only one attribute. We modified each of the 530 attributes (add or delete), but none of them affected the performance of the original model. We cannot simply choose any two of them, because there are too many combinations. To solve this problem, we came up with a novel way to perform the feature selection, and we call it Relative Ratio feature selection. In this part, we will introduce this method in detail.
 
-For every attribute X (1~530) in the training set, first, we compute the \texttt{Positive Ratio (PR)} using the following equation:
+For every attribute X in the training set, first, we compute the \texttt{Positive Ratio (PR)} using the following equation:
 
 \begin{equation}
 PR(X) = \frac{\text{benign instances that have attribute X}}{\text{total benign instances}}
@@ -245,20 +206,25 @@ We can remove last N attributes in \texttt{RRList} to the malicious samples, sho
 %\vspace{10cm}
 
 \subsection{Relative Ratio Evaluation}
+\subsubsection{Evaluation Metrics}
+We do the evaluation based on precision, recall and F-measure. Since we are more concerned about the malicious samples, we use the following definitions for \texttt{True Positive (TP)} and \texttt{True Negative (TN)}: \texttt{TP} means the number of malicious samples (-1) in test set that are correctly classified, \texttt{TN} means the number of benign samples in test set that are labeled correctly. We can also calculate \texttt{False Positive (FP)} and \texttt{False Negative (FN)}. Then we can compute precision, recall and F-measure accordingly.
+
+Because the data in test set is unbalanced, we can easily calculate a baseline, which is classifying all instances as "-1". In that case, precision = 0.827, recall = 1, and F-measure = 0.905. When we conduct experiments, we use F-measure as the evaluation criteria. If the SVM generates a result that has lower F-measure, we use the baseline values to replace the result.
+
 \subsubsection{Adding Attributes}
-The first strategy we tried was to add the top N attributes according to their RR. We tried different N numbers and evaluated how they performed with precision and recall. As shown in figure xx and figure yy, there is an obvious performance drop when N reaches about 35?. When less than 25? attributes are added, the classifier stays robust to the changes and the malicious instances are not able to escape the detection. However, take N=35? as a threshold, when more than threshold attributes are added, almost all the malicious instances successfully fool the classifier to think they are benign.
+The first strategy we tried was to add the top N attributes according to their \texttt{RR}. We tried different N values and evaluated how they performed based on precision, recall and F-measure. As shown in figure \ref{fig:add}, the performance start to drop when N reaches about 25. When less than 25 attributes are added, the classifier stays robust to the changes and the malicious instances are not able to escape the detection. When N=35, the performance reaches the baseline. That is the reason of the distortion in the figure.
 
 \begin{figure}[htbp]
 \centering
 
 \begin{subfigure}[htbp]{0.48\columnwidth}
-\includegraphics*[width=\textwidth]{fig/addattrPR.eps}
+\includegraphics*[width=\textwidth]{fig/addattrPR}
 \caption{Add attributes}
 \label{fig:add}
 \end{subfigure}
 \hfill
 \begin{subfigure}[htbp]{0.48\columnwidth}
-\includegraphics*[width=\textwidth]{fig/subattrPR.eps}
+\includegraphics*[width=\textwidth]{fig/subattrPR}
 \caption{Remove attributes}
 \label{fig:sub}
 \end{subfigure}
@@ -267,9 +233,9 @@ The first strategy we tried was to add the top N attributes according to their R
 \end{figure}
 
 \subsubsection{Removing Attributes}
-Similar to adding attributes, we did experiments on removing them as well. We tried different N numbers and evaluated how they performed with precision and recall. The evaluation result is also close to adding them. When removing less than threshold number of attributes, none of the malicious instances are mis-classified. But when the number of removed attributes increases to over threshold, all of them succeeds in escaping the detection.
+Similar to adding attributes, we did experiments on removing them as well. We tried different Ns and evaluated how they performed. As shown in Figure \ref{fig:sub}, the evaluation result is close to adding them. When removing less than threshold number of attributes, none of the malicious instances are mis-classified. But when the number of removed attributes increases to over threshold, it switched to the baseline result. 
 
-If we do further comparison between adding and removing attributes, as shown in figure zz, the threshold of removing attributes turns out to be lower than that of adding attributes. This suggests that removing attributes is easier to fool the classification-based virus detector than adding attributes.
+It is clear that the threshold of removing attributes (N = 25) is lower than that of adding attributes (N = 35). This suggests that removing attributes is more likely to fool the SVM-based virus detector than adding attributes.
 
 \subsection{Comparison with Existing Feature Selection Methods}
 In order to compare our RR-based feature selection with other approaches, we specified the same number of attributes to be added/deleted and applied the different feature selection methods. Then we record and compare the performance of the classifier towards the different modified test set. The results are shown in Table \ref{tbl:add} and Table \ref{tbl:delete}. \texttt{LibSVM-FS} stands for LibSVM feature selection, and \texttt{CB-FS} stands for correlation-based feature selection. \texttt{RR-FS} is our method.
@@ -277,14 +243,15 @@ In order to compare our RR-based feature selection with other approaches, we spe
 Table \ref{tbl:add} shows the result of adding N attributes. When N = 30, the performance of our \texttt{RR-FS} begins to drop. When N = 40, it reaches the lowest point (baseline). For \texttt{LibSVM-FS}, it does not change when N <= 50; but when N = 60, it also hits the baseline. However, for \texttt{CB-FS}, the performance never drops when N <= 70.
 
 
-Table \ref{tbl:delete} shows the result of deleting N attributes. According to \ref{fig:RRevaluation}, we know that deleting features works better than adding them. Not surprisingly,  the performance of \texttt{LibSVM-FS} starts to decrease when N = 50, which is earlier than adding. Still, for \texttt{CB-FS}, the performance does not change at all. Our \texttt{RR-FS} remains efficient and touches baseline when N = 40.
+Table \ref{tbl:delete} shows the result of deleting N attributes. According to Figure \ref{fig:RRevaluation}, we know that deleting features works better than adding them. Not surprisingly,  the performance of \texttt{LibSVM-FS} starts to decrease when N = 50, which is earlier than adding. Still, for \texttt{CB-FS}, the performance does not change at all. Our \texttt{RR-FS} remains efficient and touches baseline when N = 40.
 
 \begin{table}[!htb]
 %\begin{subtable}
 
 \centering
-\begin{minipage}{0.46\columnwidth}
+\begin{minipage}{0.47\columnwidth}
 \begin{tabular}{c  c  c c} \hline
+\centering
 % centering table
 % creating 10 columns
 % inserting double-line 
@@ -295,14 +262,15 @@ N & LibSVM-FS & CB-FS & RR-FS \\\hline
 40 & 0.992 & 0.992 & 0.905 \\
 50 & 0.992 & 0.992 & 0.905 \\
 60 & 0.905 & 0.992 & 0.905 \\
-70 & 0.905 & 0.992 & 0.905 \\
+70 & 0.905 & 0.992 & 0.905 \\\hline
 \end{tabular}
 \caption{F-measure: Adding N Attributes} % title name of the table
 \label{tbl:add}
 \end{minipage}
 \hfill
-\begin{minipage}{0.46\columnwidth}
+\begin{minipage}{0.47\columnwidth}
 \begin{tabular}{c  c  c c} \hline
+\centering
 % centering table
 % creating 10 columns
 % inserting double-line 
@@ -313,7 +281,7 @@ N & LibSVM-FS & CB-FS & RR-FS \\\hline
 40 & 0.992 & 0.992 & 0.905 \\
 50 & 0.984 & 0.992 & 0.905 \\
 60 & 0.905 & 0.992 & 0.905 \\
-70 & 0.905 & 0.992 & 0.905 \\
+70 & 0.905 & 0.992 & 0.905 \\\hline
 \end{tabular}
 \caption{F-measure: Deleting N Attributes} % title name of the table
 \label{tbl:delete}
@@ -404,7 +372,7 @@ By modifying the top N attributes according to our self-defined \texttt{RR} valu
 % \end{table}
 
 
-\newpage
+%\newpage
 \bibliographystyle{plain}
 \bibliography{Group10}
 \end{document}
