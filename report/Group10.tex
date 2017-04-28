@@ -102,20 +102,20 @@ In this project, we came up with a novel way to select features to modify, which
 \subsection{Original Dataset}
 The dataset includes instances of malicious executables (computer virus) as well as non-malicious executables (normal programs). The features are extracted from real-world malicious and non-malicious executables. The dataset was published in March 2016 in UCI Machine Learning Repository. Within one year, the web hits of the dataset has already reached over 200,000. It is obvious that the dataset arouses great interest in the machine learning community.
 
-The dataset consists of 373 instances, of which 301 are malicious and 72 are benign. Each instance has 500 hex features and 30 DLL features. Examples of hex features and DLL features are shown in Fig. \ref{fig:hexDLL}. Notice that on the UCI webpage it claims that there are 13 DLL features but we found from the raw data that there are actually 30 of them. All the attributes are binary, meaning a certain feature exists or not. 
+The dataset consists of 373 instances, of which 301 are malicious and 72 are benign. Each instance has 500 hex features and 30 DLL features. Examples of hex features and DLL features are shown in figure \ref{fig:hexDLL}. Notice that on the UCI webpage it claims that there are 13 DLL features but we found from the raw data that there are actually 30 of them. All the attributes are binary, meaning a certain feature exists or not. 
 
 However, the primary weakness of the dataset is that the sample number is relatively low. However, the goal of our project is not to exhaustively find the best machine learning model to classify malicious and non-malicious executables. Thus we think the low sample amount is tolerable. In addition, after searching online, the UCI dataset is the only dataset available that do not require extracting features by ourselves.
 
 
 \subsection{Workflow}
-The whole experiment is made up of four steps. %First, data preprocessing. Second, model training with LibSVM and testing with unmodified test set. Thus we have a criterion for evaluation. Third, data modification in the test set and testing using trained libSVM model. We need to determine which features we want to add or delete for malicious samples, which is the key of our experiment. Fourth, performance comparison. 
+The whole experiment is made up of four steps as shown in figure \ref{fig:workflow}. %First, data preprocessing. Second, model training with LibSVM and testing with unmodified test set. Thus we have a criterion for evaluation. Third, data modification in the test set and testing using trained libSVM model. We need to determine which features we want to add or delete for malicious samples, which is the key of our experiment. Fourth, performance comparison. 
 We will go through each step in detail.
 
 \begin{figure}[htbp]
-\label{fig:workflow}
 \centering
 \includegraphics*[width=\textwidth]{fig/workflow.png}
 \caption{Workflow}
+\label{fig:workflow}
 \end{figure}
 
 \subsubsection{Data Preprocessing}
